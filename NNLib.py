@@ -42,4 +42,11 @@ class NNLib:
                 norm_data.append(norm)
                 
             return np.array(norm_data).T
-        
+    
+    def apply_activation_function(self,data,function=""):
+        if function == "relu":
+            return np.maximum(0,data)
+            
+    def derivative_relu(self,data):
+        data = [1 if value>0 else 0 for value in data]
+        return np.array(data, dtype=float)
