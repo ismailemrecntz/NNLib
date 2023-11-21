@@ -5,7 +5,9 @@ import pandas as pd
 
 class NNLib:
     def __init__(self,learning_rate):
-        self.learnig_rate = learning_rate
+        self.weights = np.array([np.random.randn(), np.random.randn()])
+        self.bias = np.random.randn()
+        self.learning_rate = learning_rate
 
 
     def get_train_test_data(self,train_ratio:int, data: pd.DataFrame, label = "",random_state = 10,return_np_array = 1):
@@ -29,3 +31,15 @@ class NNLib:
         return x_train, y_train, x_test, y_test
         
 
+    def apply_normalization(self,data,normalization=""):
+        norm_data = []
+        
+        if normalization == "gaussian":
+            for i in data.T:
+                mean = np.mean(i)
+                std = np.std(i)
+                norm = ((i - mean) /std)
+                norm_data.append(norm)
+                
+            return np.array(norm_data).T
+        
