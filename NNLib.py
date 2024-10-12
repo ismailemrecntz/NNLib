@@ -147,8 +147,8 @@ class NNLib:
             self.update_parameters(gradients)
             print("----------------------------------------------------------")
         
-        average_loss_for_all_epochs =  ([sum(x)/len(self.training_loss_sum) for x in zip(*self.training_loss_sum)])
-        self.draw(average_loss_for_all_epochs,title= "Loss for average of all epochs")
+        average_loss_for_all_epochs = np.sum(self.training_loss_sum, axis=1)
+        self.draw(average_loss_for_all_epochs / len(average_loss_for_all_epochs),title= "Loss for average of all epochs")
 
            
     def forward(self,X):
@@ -184,7 +184,7 @@ class NNLib:
         for i in range(1, len(self.layers)):
             self.weights[i] -= self.learning_rate * gradients["dW"+str(i)]
             self.bias[i] -= self.learning_rate * gradients["db"+str(i)].T  
-    
+            
     def predict(self, X):
 
         forward_values = self.forward(X)
@@ -221,5 +221,5 @@ class NNLib:
     def draw(self,data,title = ""):
         plt.figure()
         plt.title(title)
-        plt.plot(range(0,len(data)), data, linestyle='dashed')
+        plt.plot(range(0,len(data)), data, linestyle='--')
         plt.show()
